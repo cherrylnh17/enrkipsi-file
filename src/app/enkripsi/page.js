@@ -1,0 +1,104 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+import FileUploader from "@/components/FileUploader";
+import PasswordInput from "@/components/PasswordInput";
+import ActionButton from "@/components/ActionButton";
+import ResultSuccess from "@/components/ResultSuccess";
+import ErrorMessage from "@/components/ErrorMessage";
+import { encryptFile } from "@/utils/crypto";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+export default function Page() {
+  const pathname = usePathname();
+  useEffect(() => {
+    // reset semua state saat pindah halaman
+    setFile(null);
+    setPassword("");
+    setStatus("idle");
+    setResult(null);
+    setError("");
+  }, [pathname]);
+
+  const [file, setFile] = useState(null);
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
+
+  const inputRef = useRef(null);
+
+  const processFile = async () => {
+    if (!file || !password) {
+      setError("File dan password wajib diisi");
+      setStatus("error");
+      return;
+    }
+
+    setStatus("processing");
+
+    try {
+      const encryptedBlob = await encryptFile(file, password);
+
+      const url = URL.createObjectURL(encryptedBlob);
+
+      setResult({
+        url,
+        filename: `${file.name}.encrypted`,
+      });
+
+
+      setStatus("success");
+    } catch (err) {
+      setError("Gagal mengenkripsi file");
+      setStatus("error");
+    }
+  };
+
+  const reset = () => {
+    setFile(null);
+    setPassword("");
+    setStatus("idle");
+    setResult(null);
+    setError("");
+  };
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <div className="max-w-lg w-full bg-slate-900 rounded-2xl p-8">
+          <FileUploader
+            file={file}
+            inputRef={inputRef}
+            onChange={(e) => setFile(e.target.files[0])}
+            onReset={reset}
+          />
+
+          <PasswordInput password={password} setPassword={setPassword} />
+
+          {status !== "success" && (
+            <ActionButton
+              mode="encrypt"
+              status={status}
+              onClick={processFile}
+              disabled={!file || !password || status === "processing"}
+            />
+          )}
+
+          {status === "error" && <ErrorMessage message={error} />}
+          {status === "success" && (
+            <ResultSuccess
+              mode="encrypt"
+              result={result}
+              onReset={reset}
+            />
+          )}
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+}
