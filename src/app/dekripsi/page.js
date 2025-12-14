@@ -11,6 +11,8 @@ import { decryptFile } from "@/utils/crypto";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+
+
 export default function Page() {
   const pathname = usePathname();
    useEffect(() => {
@@ -68,7 +70,12 @@ export default function Page() {
     <>
       <Navbar />
       <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-        <div className="max-w-lg w-full bg-slate-900 rounded-2xl p-8">
+        <div className="max-w-xl w-full bg-slate-900 rounded-2xl p-8">
+          <div className="flex justify-center items-center text-xl font-bold mb-2">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-cyan-500">
+                Dekripsi File Anda
+            </span>
+          </div>
           <FileUploader
             file={file}
             inputRef={inputRef}

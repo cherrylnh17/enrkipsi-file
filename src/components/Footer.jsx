@@ -7,7 +7,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center mb-4 md:mb-0">
           <Shield className="h-6 w-6 text-emerald-500 mr-2" />
-          <span className="text-lg font-bold text-white">SecureVault</span>
+          <span className="text-lg font-bold text-white">SecureFile</span>
         </div>
         <div className="flex space-x-6 text-slate-400 text-sm">
           <a href="#" className="hover:text-emerald-400 transition-colors">Privacy Policy</a>
@@ -16,7 +16,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-8 text-center md:text-left text-slate-600 text-xs">
-        &copy; {new Date().getFullYear()} SecureVault Project. All rights reserved.
+        &copy; {new Date().getFullYear()} SecureFile Project. All rights reserved.
       </div>
     </div>
   </footer>
