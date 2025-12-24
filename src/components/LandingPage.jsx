@@ -4,6 +4,7 @@ import React from 'react';
 import {
   Shield, FileKey, Cpu, Lock, Globe, Zap, ArrowRight, Check
 } from 'lucide-react';
+import Link from 'next/link';
 
 const FeatureCard = ({ icon: Icon, title, desc }) => (
   <div className="bg-slate-800/40 p-6 rounded-xl border border-slate-700">
@@ -237,12 +238,12 @@ const LandingPage = () => {
           <p className="text-slate-400 mb-8 text-lg">
             Bergabunglah dengan standar keamanan masa depan. Sederhana, Cepat, dan Aman.
           </p>
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            <Link href="/enkripsi"
             className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-bold text-lg transition-all shadow-xl shadow-emerald-500/20 hover:scale-105"
-          >
-            Enkripsi File
-          </button>
+            >
+                Enkripsi File
+            </Link>
+    
         </div>
       </section>
     </div>
